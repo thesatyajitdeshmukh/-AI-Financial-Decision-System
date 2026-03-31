@@ -675,8 +675,8 @@ with tab5:
         for _ in range(n_ports):
             w = np.random.dirichlet(np.ones(n_assets))
             all_weights.append(w)
-            pr = np.dot(w, mean_returns)
-            pv = np.sqrt(np.dot(w.T, np.dot(cov_matrix, w)))
+            pr = np.dot(w, mean_returns.values)
+            pv = np.sqrt(np.dot(w.T, np.dot(cov_matrix.values, w)))
             port_returns.append(pr)
             port_vols.append(pv)
             port_sharpes.append(pr / pv if pv > 0 else 0)
