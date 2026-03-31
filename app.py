@@ -663,7 +663,9 @@ with tab5:
         returns_mat  = price_pivot.pct_change().dropna()
         cov_matrix   = returns_mat.cov() * 252
         mean_returns = returns_mat.mean() * 252
-
+        mean_returns = mean_returns.dropna()
+        cov_matrix = cov_matrix.loc[mean_returns.index, mean_returns.index]
+        
         # Random portfolios
         np.random.seed(42)
         n_ports = 3000
@@ -671,7 +673,7 @@ with tab5:
         port_vols    = []
         port_sharpes = []
         all_weights  = []
-        n_assets     = len(TICKERS)
+        n_assets     = len(mean_returns)
         for _ in range(n_ports):
             w = np.random.dirichlet(np.ones(n_assets))
             all_weights.append(w)
