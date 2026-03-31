@@ -703,13 +703,34 @@ with tab5:
         plt.close(fig)
 
         # Optimal weights bar chart
+                
+        valid_tickers = mean_returns.index.tolist()
+
         fig2, ax2 = dark_fig((8, 3))
-        bars = ax2.bar(TICKERS, best_weights * 100, color=[colors_list[i % len(colors_list)] for i in range(len(TICKERS))], edgecolor="#0a0e1a")
+
+        bars = ax2.bar(
+            valid_tickers,
+            best_weights * 100,
+            color=[colors_list[i % len(colors_list)] for i in range(len(valid_tickers))],
+            edgecolor="#0a0e1a"
+        )
+
         ax2.set_title("Optimal Portfolio Weights (Max Sharpe)", fontsize=11)
         ax2.set_ylabel("Weight (%)")
+
         for bar, val in zip(bars, best_weights):
-            ax2.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.5, f"{val*100:.1f}%", ha="center", va="bottom", color="#a0c4e0", fontsize=9)
+            ax2.text(
+                bar.get_x() + bar.get_width() / 2,
+                bar.get_height() + 0.5,
+                f"{val*100:.1f}%",
+                ha="center",
+                va="bottom",
+                color="#a0c4e0",
+                fontsize=9
+            )
+
         ax2.grid(True, alpha=0.1, axis="y")
+
         fig2.tight_layout()
         st.pyplot(fig2)
         plt.close(fig2)
