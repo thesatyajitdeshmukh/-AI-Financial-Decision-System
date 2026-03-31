@@ -752,7 +752,7 @@ with tab5:
 # ════════════════════════════════════════════
 with tab6:
     st.markdown('<div class="section-header">FinBERT Financial Sentiment Analysis</div>', unsafe_allow_html=True)
-    st.info("ℹ️ FinBERT (ProsusAI/finbert) requires a Hugging Face connection. Results below use a rule-based approximation for fast demo. Enable the real model in `app.py` if deploying with GPU/HF access.", icon="💡")
+    st.info("FinBERT requires Hugging Face...")
 
     headlines = [h.strip() for h in NEWS_TEXT.strip().split("\n") if h.strip()]
 
