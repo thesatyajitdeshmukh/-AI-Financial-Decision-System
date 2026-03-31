@@ -541,18 +541,24 @@ with tab3:
     plt.close(fig)
 
     # Drawdown chart
+        # Drawdown chart
     pf_series = pd.Series(portfolio)
 
     cummax = pf_series.cummax()
     cummax = cummax.replace(0, np.nan)
 
     drawdown = (pf_series - cummax) / cummax * 100
-    drawdown = drawdown.fillna(0)
+
+    # 🔥 CRITICAL FIX
+    drawdown = drawdown.astype(float).replace([np.inf, -np.inf], 0).fillna(0)
 
     fig2, ax2 = dark_fig((13, 3))
 
-    ax2.fill_between(range(len(drawdown)), drawdown, color=COLOR_3, alpha=0.5)
-    ax2.plot(drawdown, color=COLOR_3, lw=1)
+    x = np.arange(len(drawdown))
+    y = drawdown.to_numpy()   # ✅ convert to clean numpy array
+
+    ax2.fill_between(x, y, 0, color=COLOR_3, alpha=0.5)
+    ax2.plot(x, y, color=COLOR_3, lw=1)
 
     ax2.set_title("Drawdown (%)", fontsize=11)
     ax2.set_xlabel("Trading Days")
