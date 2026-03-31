@@ -542,13 +542,23 @@ with tab3:
 
     # Drawdown chart
     pf_series = pd.Series(portfolio)
-    drawdown  = (pf_series - pf_series.cummax()) / pf_series.cummax() * 100
+
+    cummax = pf_series.cummax()
+    cummax = cummax.replace(0, np.nan)
+
+    drawdown = (pf_series - cummax) / cummax * 100
+    drawdown = drawdown.fillna(0)
+
     fig2, ax2 = dark_fig((13, 3))
+
     ax2.fill_between(range(len(drawdown)), drawdown, color=COLOR_3, alpha=0.5)
     ax2.plot(drawdown, color=COLOR_3, lw=1)
+
     ax2.set_title("Drawdown (%)", fontsize=11)
-    ax2.set_xlabel("Trading Days"); ax2.set_ylabel("%")
+    ax2.set_xlabel("Trading Days")
+    ax2.set_ylabel("%")
     ax2.grid(True, alpha=0.1)
+
     fig2.tight_layout()
     st.pyplot(fig2)
     plt.close(fig2)
